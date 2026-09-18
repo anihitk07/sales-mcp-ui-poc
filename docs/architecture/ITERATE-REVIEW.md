@@ -32,13 +32,27 @@ Both pages were re-exported and inspected: the deployment page was corrected for
 canvas overflow, label collisions on the Entra and right-hand service column, and
 an adapter edge that appeared to run through the node it terminated on.
 
-## Component-architecture refinement
+## Component-architecture refinement (2026-09-19)
 
-The component page was then pitched and iterated independently while leaving the
-Azure deployment page unchanged. The final component diagram corrects the tool
-inventory, identifies embedded synthetic data and the optional read-only MCP
-adapter, shows `quoteService` orchestrating arithmetic and data access, and
-states the actual draft-write and simulated-save invariants. Four correction
-passes were inspected at A5 export size; intermediate component pitch/pass
-artifacts were removed at the user's request, leaving only the final source and
-PNG.
+The component page was independently re-pitched as a responsibility map while
+the approved Azure deployment page and PNG remained unchanged.
+
+- **Pitch:** reduced the story to host mediation → application responsibilities
+  → Azure/data dependencies (1,082 non-whitespace XML characters).
+- **Pass 1 — visual upgrade:** expanded to 16,955 characters (**1,467% growth**),
+  adding separate request/result paths, five-tool registration, read and
+  state-changing handlers, `salesData`, embedded synthetic data, `quoteService`,
+  `quoteMath`, `quoteStore`, identity scope, optional CRM MCP, Blob storage,
+  telemetry, legend, production gate, and invariants.
+- **Pass 2:** moved relationship labels into routing gutters and routed the
+  optional MCP edge around embedded data.
+- **Pass 3:** added the missing registration-to-handler dispatch relationships.
+- **Passes 4–7:** repeatedly corrected those dispatch routes until they no
+  longer crossed components or labels.
+- **Pass 8:** shortened the supporting-services heading to remove a subtle
+  right-edge overflow that caused diagrams.net to export a blank second page.
+
+Every PNG was inspected after export. The final page is `1122 × 792` pixels and
+shows no overlapping nodes/labels or connectors crossing unrelated components.
+At the maintainer's request, intermediate files are not committed; only the
+final editable two-page source and matching PNG remain in the repository.

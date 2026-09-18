@@ -20,4 +20,4 @@ Azure services are drawn with the official Azure architecture icon set. Code mod
 - `ITERATE-REVIEW.md` — review record and retention note.
 - `CREDITS.md` — provenance, tooling, and asset statement.
 
-The deployment diagram distinguishes Entra token issuance from Function App Easy Auth enforcement and Function managed identity. The component diagram separates host/UI, Function code, and dependencies. Brown dashed paths are optional; quote persistence is simulation-only. The red identity note is a production gate, not a claim that per-user isolation has already been proven.
+The deployment diagram distinguishes Entra token issuance from Function App Easy Auth enforcement and Function managed identity. The component diagram is responsibility-first: it separates host-mediated MCP Apps interaction, read handlers, quote orchestration, identity-scoped state, embedded demo data, and optional upstream CRM reads. Brown dashed paths are optional; quote persistence is simulation-only. The red identity note is a production gate, not a claim that per-user isolation has already been proven.

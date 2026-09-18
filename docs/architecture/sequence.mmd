@@ -20,7 +20,7 @@ sequenceDiagram
     Data-->>Fn: Normalized sales payload
     Fn-->>Host: structuredContent + UI resource metadata
     Host->>Fn: resources/read(ui://sales/workspace.html)
-    Fn-->>Host: text/html;profile=mcp-app
+    Fn-->>Host: MCP Apps HTML resource (text/html profile)
     Host->>UI: Mount inline widget
     UI-->>User: Render dashboard, charts, and filters
 
