@@ -1,0 +1,28 @@
+{
+  "name": "sales-mcp-ui-poc",
+  "version": "1.0.0",
+  "description": "Azure Functions MCP Apps sales companion proof of concept",
+  "scripts": {
+    "build": "tsc",
+    "build:app": "cd src/app && npm install --no-audit --no-fund && npm run build",
+    "watch": "tsc -w",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build:app && npm run build",
+    "start": "func start",
+    "test": "npm run clean && npm run build:app && npm run build && node --test dist/test/sales.test.js",
+    "check": "npm test"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.13.0",
+    "@azure/identity": "^4.11.1",
+    "@azure/storage-blob": "^12.28.0",
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.x",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0"
+  },
+  "main": "dist/src/index.js"
+}

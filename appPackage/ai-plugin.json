@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+  "schema_version": "v2.4",
+  "name_for_human": "Sales companion MCP",
+  "description_for_human": "Review opportunities and create explicitly confirmed simulated quotes.",
+  "contact_email": "publisher@example.com",
+  "namespace": "sales-companion-poc",
+  "functions": [
+    {
+      "name": "get_sales_dashboard",
+      "description": "Returns the sales dashboard from synthetic data or a configured read-only CRM MCP server."
+    },
+    {
+      "name": "get_opportunity",
+      "description": "Returns one opportunity and its fixed PoC quote catalog."
+    },
+    {
+      "name": "preview_quote",
+      "description": "Creates or revises a Blob-backed simulated quote draft."
+    },
+    {
+      "name": "save_demo_quote",
+      "description": "Explicitly confirms and idempotently saves a simulated quote. It never writes to CRM."
+    },
+    {
+      "name": "get_demo_quote",
+      "description": "Reads a previously saved simulated quote from identity-scoped Blob storage."
+    }
+  ],
+  "runtimes": [
+    {
+      "type": "RemoteMCPServer",
+      "spec": {
+        "url": "https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp",
+        "mcp_tool_description": {
+          "file": "mcp-tools.json"
+        }
+      },
+      "run_for_functions": [
+        "get_sales_dashboard",
+        "get_opportunity",
+        "preview_quote",
+        "save_demo_quote",
+        "get_demo_quote"
+      ],
+      "auth": {
+        "type": "OAuthPluginVault",
+        "reference_id": "${{MCP_DA_AUTH_ID_FUNCAPI3HZ}}"
+      }
+    }
+  ]
+}

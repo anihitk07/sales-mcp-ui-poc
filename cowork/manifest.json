@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.28",
+  "version": "1.0.0",
+  "id": "7c7d6d11-9e3a-4a87-8db5-c5b9a2f9f8c1",
+  "packageName": "com.microsoft.salescompanion.cowork",
+  "developer": {
+    "name": "Sales Companion PoC",
+    "websiteUrl": "https://learn.microsoft.com/microsoft-365/copilot/extensibility/plugin-mcp-apps",
+    "privacyUrl": "https://www.microsoft.com/privacy",
+    "termsOfUseUrl": "https://www.microsoft.com/legal/terms-of-use"
+  },
+  "name": { "short": "Sales Companion Cowork", "full": "Sales Companion for Copilot Cowork" },
+  "description": {
+    "short": "Review pipeline, research opportunities, and prepare simulated quotes.",
+    "full": "Cowork skills for the Sales Companion MCP server. Reads synthetic or configured read-only sales data and prepares explicitly confirmed simulated quote drafts without CRM writes."
+  },
+  "accentColor": "#0078D4",
+  "agentSkills": [
+    { "folder": "./skills/pipeline-review-pack" },
+    { "folder": "./skills/opportunity-research-brief" },
+    { "folder": "./skills/simulated-quote-review" }
+  ],
+  "agentConnectors": [
+    {
+      "id": "sales-companion-mcp",
+      "displayName": "Sales Companion MCP",
+      "description": "Read sales dashboard and opportunity data; prepare and save explicitly confirmed simulated quotes.",
+      "toolSource": {
+        "remoteMcpServer": {
+          "mcpServerUrl": "REPLACE_WITH_MCP_URI",
+          "mcpToolDescription": { "file": "./tools/server-tools.json" },
+          "authorization": { "type": "OAuthPluginVault", "referenceId": "REPLACE_WITH_COWORK_AUTH_REFERENCE" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://aka.ms/m365-agents-toolkits/v1.11/yaml.schema.json
+version: v1.11
+
+environmentFolderPath: ./env
+projectId: 87849cc9-c528-4ae2-a239-4ec5f5cb3581
+
+provision:
+  - uses: teamsApp/create
+    with:
+      name: Sales companion
+    writeToEnvironmentFile:
+      teamsAppId: TEAMS_APP_ID
+  - uses: oauth/register
+    with:
+      name: funcapi3hz
+      appId: ${{TEAMS_APP_ID}}
+      flow: authorizationCode
+      identityProvider: MicrosoftEntra
+      baseUrl: https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp
+      clientId: ${{MCP_DA_OAUTH_CLIENT_ID_FUNCAPI3HZ}}
+    writeToEnvironmentFile:
+      configurationId: MCP_DA_AUTH_ID_FUNCAPI3HZ
+      applicationIdUri: MCP_DA_APPLICATION_ID_URI_FUNCAPI3HZ

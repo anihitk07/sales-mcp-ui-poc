@@ -1,0 +1,156 @@
+{
+  "tools": [
+    {
+      "name": "get_sales_dashboard",
+      "description": "Returns the sales dashboard from synthetic data or a configured read-only CRM MCP server.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://sales/workspace.html",
+          "visibility": [
+            "model"
+          ]
+        }
+      }
+    },
+    {
+      "name": "get_opportunity",
+      "description": "Returns one opportunity and its fixed PoC quote catalog.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "opportunityId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "opportunityId"
+        ],
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://sales/workspace.html",
+          "visibility": [
+            "model"
+          ]
+        }
+      }
+    },
+    {
+      "name": "preview_quote",
+      "description": "Creates or revises a Blob-backed simulated quote draft.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "opportunityId": {
+            "type": "string"
+          },
+          "productQuantity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000
+          },
+          "serviceQuantity": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "discountBps": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5000
+          },
+          "draftId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "opportunityId",
+          "productQuantity",
+          "serviceQuantity",
+          "discountBps"
+        ],
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://sales/workspace.html",
+          "visibility": [
+            "model"
+          ]
+        }
+      }
+    },
+    {
+      "name": "save_demo_quote",
+      "description": "Explicitly confirms and idempotently saves a simulated quote. It never writes to CRM.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "draftId": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "confirmationToken": {
+            "type": "string",
+            "const": "CONFIRM_SIMULATED_SAVE"
+          },
+          "idempotencyKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "draftId",
+          "revision",
+          "confirmationToken",
+          "idempotencyKey"
+        ],
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://sales/workspace.html",
+          "visibility": [
+            "model"
+          ]
+        }
+      }
+    },
+    {
+      "name": "get_demo_quote",
+      "description": "Reads a previously saved simulated quote from identity-scoped Blob storage.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "quoteId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "quoteId"
+        ],
+        "additionalProperties": false
+      },
+      "_meta": {
+        "ui": {
+          "resourceUri": "ui://sales/workspace.html",
+          "visibility": [
+            "model"
+          ]
+        }
+      }
+    }
+  ]
+}

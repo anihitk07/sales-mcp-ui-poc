@@ -1,0 +1,31 @@
+sequenceDiagram
+    actor User
+    participant Cowork as Copilot Cowork skill
+    participant Host as M365 Copilot host
+    participant UI as MCP Apps workspace
+    participant Fn as Azure Functions MCP server
+    participant Data as Synthetic seed or configured CRM MCP
+    participant Blob as Azure Blob Storage
+
+    User->>Cowork: Review pipeline or prepare quote
+    Cowork->>Host: Invoke approved MCP tool
+    Host->>Fn: Authenticated MCP request
+    Fn->>Data: Read dashboard/opportunity
+    Data-->>Fn: Normalized sales payload
+    Fn-->>Host: structuredContent + UI metadata
+    Host->>Fn: Read ui://sales/workspace.html
+    Fn-->>UI: Inline HTML widget
+    User->>UI: Filter, open opportunity, edit quote
+    UI->>Host: callServerTool(preview_quote)
+    Host->>Fn: Draft request
+    Fn->>Blob: Conditional user-scoped draft write
+    Blob-->>Fn: Draft ID + revision
+    Fn-->>UI: Server-calculated preview
+    User->>UI: Explicitly approve simulated save
+    UI->>Host: callServerTool(save_demo_quote)
+    Host-->>User: Host confirmation for side effect
+    Host->>Fn: Token + revision + idempotency key
+    Fn->>Blob: Conditional simulated save
+    Blob-->>Fn: SIMULATED quote reference
+    Fn-->>UI: Simulation result
+    UI-->>User: SIMULATED — not saved to CRM
