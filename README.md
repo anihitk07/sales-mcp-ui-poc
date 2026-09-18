@@ -151,7 +151,7 @@ Cowork skills are instructions that orchestrate connector tools; they are not an
 - [Azure deployment diagram](docs/architecture/sales-companion-architecture.png) and [editable Draw.io source](docs/architecture/sales-companion-architecture.drawio)
 - [Component architecture diagram](docs/architecture/sales-companion-components.png)
 - [Mermaid sequence](docs/architecture/sequence.mmd)
-- [Four-pass Draw.io review evidence](docs/architecture/ITERATE-REVIEW.md)
+- [Draw.io review record](docs/architecture/ITERATE-REVIEW.md) — final artifact only; intermediate passes were not retained
 
 The diagrams distinguish Entra token issuance, Easy Auth enforcement, Function managed identity, host-mediated widget rendering, optional upstream CRM MCP access, and the unproven per-user identity-isolation production gate.
 
