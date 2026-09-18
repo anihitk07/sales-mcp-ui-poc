@@ -27,6 +27,7 @@ This workflow is deliberately limited to a Blob-backed simulation. It never writ
    - the current draft ID and revision
    - a fresh idempotency key
 6. Report the returned simulated quote reference. If the user asks to reload, call `get_demo_quote` using the server-issued reference.
+7. If requested, use Cowork's built-in Word capability to create a clearly watermarked `SIMULATED — not saved to CRM` quote-review document from the server-returned values. Do not create or send a customer-facing quote.
 
 ## Output
 

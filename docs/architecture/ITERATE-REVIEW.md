@@ -1,17 +1,24 @@
 # Draw.io Iterate review record
 
-The editable source is `sales-companion-architecture.drawio`. The source was opened in Draw.io with obstacle-avoiding routing, and the matching PNG previews were rendered and inspected at 1400×900.
+Each review pass has its own two-page editable source and two matching PNG exports. All pages use an A5-landscape ratio (`1120 × 790`) and were exported with diagrams.net desktop v31.4.5.
 
-## Passes
+## Evidence
 
-1. **Visual upgrade:** grouped Microsoft 365, Azure, operations, storage, synthetic data, and optional upstream MCP boundaries; added semantic colors, labels, legend, and separate component page.
-2. **Corrections only:** checked request direction and endpoint meaning; retained host-mediated MCP calls and separate optional read paths.
-3. **Corrections only:** checked the component preview for overlaps; labels remain readable at normal size and the UI bridge is distinct from server tools.
-4. **Final correction check:** traced runtime, persistence, telemetry, and optional configuration arrows; no further changes required.
+| Stage | Editable source | Non-whitespace XML | Deployment PNG | Component PNG |
+| --- | --- | ---: | --- | --- |
+| Pitch | `sales-companion-architecture-pitch.drawio` | 2,860 | `sales-companion-architecture-pitch.png` | `sales-companion-components-pitch.png` |
+| Pass 1 | `sales-companion-architecture-pass1.drawio` | 25,758 | `sales-companion-architecture-pass1.png` | `sales-companion-components-pass1.png` |
+| Pass 2 | `sales-companion-architecture-pass2.drawio` | 24,011 | `sales-companion-architecture-pass2.png` | `sales-companion-components-pass2.png` |
+| Pass 3 | `sales-companion-architecture-pass3.drawio` | 24,423 | `sales-companion-architecture-pass3.png` | `sales-companion-components-pass3.png` |
+| Pass 4 | `sales-companion-architecture-pass4.drawio` | 25,192 | `sales-companion-architecture-pass4.png` | `sales-companion-components-pass4.png` |
 
-PNG pairs:
+Pass 1 is an **800.6% increase** over the deliberately minimal pitch source. Later passes remove redundant relationships and improve semantics, so raw XML size is not expected to increase monotonically.
 
-- `sales-companion-architecture-pass1.png` through `pass4.png`
-- `sales-companion-components-pass1.png` through `pass4.png`
+## Review passes
 
-The architecture source contains approximately 11,599 non-whitespace XML characters across two pages. The PNGs are review previews generated from the same facts and visual direction; the `.drawio` file remains authoritative for editable diagrams.
+1. **Meaningful expansion:** separated M365/Cowork host, Entra token issuer, Easy Auth enforcement, Function application, UI resource, tools, data providers, state, and telemetry. Added a separate code-level component page and explicit PoC safety boundaries.
+2. **Readability and contrast:** standardized accessible blue/teal/brown connectors, A5 spacing, legends, telemetry guidance, and simplified labels.
+3. **Semantic correction:** added the identity-isolation production gate, distinguished user identity from managed identity, qualified the optional upstream MCP path, and showed Application Insights linked to Log Analytics.
+4. **Publication polish:** removed crossed/ambiguous dependency arrows, rerouted the host-mediated UI return, kept labels inside boxes, added invariants, and verified both final PNGs at full-page and enlarged views.
+
+`sales-companion-architecture.drawio` and the two unnumbered PNGs are copies of Pass 4. The prior byte-identical pass artifacts were replaced; every saved pass now has a distinct editable source and matching export.

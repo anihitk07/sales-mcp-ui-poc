@@ -1,13 +1,23 @@
 # Architecture diagrams
 
-## Editable diagrams
+## Final diagrams
 
-- `sales-companion-architecture.drawio` — two editable pages: Azure deployment architecture and component-level architecture.
-- `sequence.mmd` — Mermaid sequence for Cowork/M365 dashboard, widget callback, preview, and confirmed simulated save.
-- `CREDITS.md` — source and asset credits.
+### Azure deployment
 
-The `.drawio` source is the authoritative editable artifact. The architecture uses a single Azure Functions MCP boundary, Entra/Easy Auth, Blob-backed simulation, optional server-side upstream MCP, and Application Insights. Dashed paths are optional/configured; quote writes remain simulation-only.
+![Azure deployment architecture showing M365/Cowork host rendering, Entra and Easy Auth, Azure Functions MCP tools and UI resource, Blob persistence, telemetry, and optional upstream CRM MCP.](sales-companion-architecture.png)
 
-## Review history
+### Component architecture
 
-Initial pitch source created from the deployed PoC facts and current Azure component boundaries. Draw.io Iterate review records are maintained alongside the exported PNG when a renderer is available.
+![Component architecture showing the host bridge and widget, MCP registration, read and simulated-write tools, normalized data access, quote arithmetic and state services, and external dependencies.](sales-companion-components.png)
+
+The editable `sales-companion-architecture.drawio` contains both pages. It is the authoritative final source and matches Pass 4.
+
+## Supporting artifacts
+
+- `sequence.mmd` — host-mediated Mermaid sequence for M365 or Cowork, widget callbacks, preview, and confirmed simulated save.
+- `sales-companion-architecture-{pitch,pass1..pass4}.drawio` — editable pitch and iteration evidence.
+- Matching `sales-companion-architecture-*.png` and `sales-companion-components-*.png` — per-pass exports.
+- `ITERATE-REVIEW.md` — measured four-pass review record.
+- `CREDITS.md` — provenance, tooling, and asset statement.
+
+The deployment diagram distinguishes Entra token issuance from Function App Easy Auth enforcement and Function managed identity. The component diagram separates host/UI, Function code, and dependencies. Brown dashed paths are optional; quote persistence is simulation-only. The red identity note is a production gate, not a claim that per-user isolation has already been proven.

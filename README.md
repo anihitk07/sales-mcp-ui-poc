@@ -133,9 +133,9 @@ The package passed all 61 Agents Toolkit validation rules and was installed in t
 
 `cowork/` contains a Unified App Manifest, MCP tool descriptions, and three portable Agent Skills inspired by the L2Q Cowork package structure:
 
-- `pipeline-review-pack` — filter-aware, read-only pipeline review.
-- `opportunity-research-brief` — grounded opportunity brief and quote-input discovery.
-- `simulated-quote-review` — server-calculated quote preview and explicitly confirmed simulated save.
+- `pipeline-review-pack` — reconciled pipeline analysis plus optional Excel workbook, PowerPoint narrative, and executive email draft.
+- `opportunity-research-brief` — grounded Word meeting brief and optional email draft without invented contacts or activity.
+- `simulated-quote-review` — server-calculated quote preview, optional Word review, and explicitly confirmed simulated save.
 
 The package uses the same five MCP tools as the M365 declarative agent. Replace the endpoint and OAuth token-store reference in `cowork/manifest.json` before upload; never place credentials in the skill files. Build it with:
 
@@ -145,6 +145,15 @@ Set-Location C:\Flutter\sales-mcp-ui-poc
 ```
 
 Cowork skills are instructions that orchestrate connector tools; they are not an authorization boundary. Server-side validation, ownership checks, the exact `CONFIRM_SIMULATED_SAVE` token, current revision, and idempotency key remain mandatory. Cowork MCP Apps may render the same `ui://sales/workspace.html` resource, but host capability and confirmation behavior must be verified in the target tenant.
+
+## Architecture artifacts
+
+- [Azure deployment diagram](docs/architecture/sales-companion-architecture.png) and [editable Draw.io source](docs/architecture/sales-companion-architecture.drawio)
+- [Component architecture diagram](docs/architecture/sales-companion-components.png)
+- [Mermaid sequence](docs/architecture/sequence.mmd)
+- [Four-pass Draw.io review evidence](docs/architecture/ITERATE-REVIEW.md)
+
+The diagrams distinguish Entra token issuance, Easy Auth enforcement, Function managed identity, host-mediated widget rendering, optional upstream CRM MCP access, and the unproven per-user identity-isolation production gate.
 
 ## Security caveats
 

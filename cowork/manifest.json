@@ -15,6 +15,10 @@
     "short": "Review pipeline, research opportunities, and prepare simulated quotes.",
     "full": "Cowork skills for the Sales Companion MCP server. Reads synthetic or configured read-only sales data and prepares explicitly confirmed simulated quote drafts without CRM writes."
   },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
   "accentColor": "#0078D4",
   "agentSkills": [
     { "folder": "./skills/pipeline-review-pack" },

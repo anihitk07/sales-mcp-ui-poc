@@ -1,14 +1,15 @@
 ---
 name: pipeline-review-pack
 description: |
-  Reviews the Sales Companion pipeline and produces a defensible, filter-aware
-  summary. Use when the user asks to review pipeline, forecast coverage, filter
-  opportunities, compare stages, prepare a forecast call, or explain pipeline risk.
+  Builds a grounded Sales Companion pipeline review pack: reconciled analysis,
+  an Excel workbook, a PowerPoint narrative, and an executive email draft. Use
+  when the user asks to review pipeline, prepare a forecast call, create a QBR
+  pack, compare stages, build a board update, or explain pipeline risk.
 ---
 
 # Pipeline Review Pack
 
-Use this skill for a read-only Cowork analysis of the current sales dashboard. It is a review workflow, not a CRM update workflow.
+Use this skill as a sales-manager workflow. Read the current dashboard once, derive every number from that payload, then use Cowork's built-in Excel, PowerPoint, and email-drafting capabilities to create a consistent review pack. It is not a CRM update or email-send workflow.
 
 ## Inputs
 
@@ -22,15 +23,19 @@ Use this skill for a read-only Cowork analysis of the current sales dashboard. I
 2. Apply requested stage, text, amount, and sort filters to the returned opportunities. Do not invent records or silently fetch a different dataset.
 3. Reconcile pipeline total, weighted pipeline, stage mix, and visible deal count from the same filtered set.
 4. Call `get_opportunity` only for the one to three deals needed to explain a risk, concentration, or next action.
-5. Present a concise review with assumptions, provenance, and a table of visible deals. Offer Cowork's built-in Excel/PowerPoint skills only as a separate user-requested artifact step.
+5. Show the reconciled headline and proposed artifact outline before generating files.
+6. Use Cowork's built-in Excel capability to create a summary sheet, opportunity-detail sheet, and stage-mix chart from the same derived dataset.
+7. Use Cowork's built-in PowerPoint capability to create a concise forecast narrative: headline, stage mix, largest deals, risks/unknowns, and asks.
+8. Draft—but do not send—an executive email containing the same headline numbers and links to the workbook/deck.
+9. Reconcile the figures across chat, workbook, deck, and email draft before reporting completion.
 
 ## Output
 
-- Scope and filters used.
-- Pipeline total, weighted total, stage mix, and visible count.
-- Top opportunities by amount and close date.
-- Risks or missing data, explicitly marked as unknown when absent.
-- Recommended next actions grounded in returned fields.
+- Scope, filters, provenance, pipeline total, weighted total, stage mix, and visible count.
+- `pipeline-review.xlsx`: summary, opportunity detail, and stage-mix sheets.
+- `pipeline-review.pptx`: executive narrative using the reconciled figures.
+- Executive email draft: headline, top risks, and explicit asks; never automatically sent.
+- Risks, unknowns, and recommended next actions grounded in returned fields.
 
 ## Guardrails
 

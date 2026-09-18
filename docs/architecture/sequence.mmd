@@ -1,31 +1,47 @@
 sequenceDiagram
     actor User
+    participant M365 as M365 Copilot agent
     participant Cowork as Copilot Cowork skill
-    participant Host as M365 Copilot host
-    participant UI as MCP Apps workspace
+    participant Host as Selected MCP Apps host bridge
+    participant UI as Sandboxed sales workspace
     participant Fn as Azure Functions MCP server
     participant Data as Synthetic seed or configured CRM MCP
     participant Blob as Azure Blob Storage
 
-    User->>Cowork: Review pipeline or prepare quote
-    Cowork->>Host: Invoke approved MCP tool
+    alt M365 declarative-agent surface
+        User->>M365: Review pipeline or prepare quote
+        M365->>Host: Invoke approved MCP tool
+    else Cowork skill surface
+        User->>Cowork: Run sales workflow
+        Cowork->>Host: Invoke approved MCP tool
+    end
     Host->>Fn: Authenticated MCP request
-    Fn->>Data: Read dashboard/opportunity
+    Fn->>Data: Read dashboard or opportunity
     Data-->>Fn: Normalized sales payload
-    Fn-->>Host: structuredContent + UI metadata
-    Host->>Fn: Read ui://sales/workspace.html
-    Fn-->>UI: Inline HTML widget
+    Fn-->>Host: structuredContent + UI resource metadata
+    Host->>Fn: resources/read(ui://sales/workspace.html)
+    Fn-->>Host: text/html;profile=mcp-app
+    Host->>UI: Mount inline widget
+    UI-->>User: Render dashboard, charts, and filters
+
     User->>UI: Filter, open opportunity, edit quote
     UI->>Host: callServerTool(preview_quote)
     Host->>Fn: Draft request
-    Fn->>Blob: Conditional user-scoped draft write
+    Fn->>Blob: Conditional identity-scoped draft write
     Blob-->>Fn: Draft ID + revision
-    Fn-->>UI: Server-calculated preview
+    Fn-->>Host: Server-calculated preview result
+    Host-->>UI: Deliver tool result
+    UI-->>User: Show exact preview and simulation label
+
     User->>UI: Explicitly approve simulated save
     UI->>Host: callServerTool(save_demo_quote)
-    Host-->>User: Host confirmation for side effect
+    opt Host policy for a side-effecting tool
+        Host-->>User: Request invocation confirmation
+        User-->>Host: Confirm
+    end
     Host->>Fn: Token + revision + idempotency key
     Fn->>Blob: Conditional simulated save
     Blob-->>Fn: SIMULATED quote reference
-    Fn-->>UI: Simulation result
+    Fn-->>Host: Simulation result
+    Host-->>UI: Deliver tool result
     UI-->>User: SIMULATED — not saved to CRM
