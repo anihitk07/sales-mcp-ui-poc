@@ -31,3 +31,14 @@ with its official Azure architecture icon instead of a generic labelled box.
 Both pages were re-exported and inspected: the deployment page was corrected for
 canvas overflow, label collisions on the Entra and right-hand service column, and
 an adapter edge that appeared to run through the node it terminated on.
+
+## Component-architecture refinement
+
+The component page was then pitched and iterated independently while leaving the
+Azure deployment page unchanged. The final component diagram corrects the tool
+inventory, identifies embedded synthetic data and the optional read-only MCP
+adapter, shows `quoteService` orchestrating arithmetic and data access, and
+states the actual draft-write and simulated-save invariants. Four correction
+passes were inspected at A5 export size; intermediate component pitch/pass
+artifacts were removed at the user's request, leaving only the final source and
+PNG.
