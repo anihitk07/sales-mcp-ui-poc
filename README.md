@@ -1,3 +1,15 @@
+---
+page_type: sample
+languages:
+- typescript
+- bicep
+products:
+- azure
+urlFragment: sales-mcp-ui-poc
+name: sales-mcp-ui-poc
+description: "An Azure Functions Remote MCP TypeScript application that renders one bundled MCP Apps workspace for this flow:"
+---
+
 # Sales companion MCP Apps PoC
 
 An Azure Functions Remote MCP TypeScript application that renders one bundled MCP Apps workspace for this flow:
@@ -169,3 +181,12 @@ The diagrams distinguish Entra token issuance, Easy Auth enforcement, Function m
 ## Cleanup
 
 Azure resources and the installed M365 app are intentionally preserved for user verification. Local dependency and runtime cache directories are removed after final validation; restore dependencies with `npm ci`. Do not run `azd down` until the user explicitly approves deletion.
+
+## Trademarks
+
+This project may contain trademarks or logos for projects, products, or services.
+Authorized use of Microsoft trademarks or logos is subject to and must follow
+[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
+Use of Microsoft trademarks or logos in modified versions of this project must not
+cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or
+logos are subject to those third-party's policies.
