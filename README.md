@@ -6,8 +6,8 @@ languages:
 products:
 - azure
 urlFragment: sales-mcp-ui-poc
-name: sales-mcp-ui-poc
-description: "An Azure Functions Remote MCP TypeScript application that renders one bundled MCP Apps workspace for this flow:"
+name: Sales companion MCP Apps sample
+description: "Build an Azure Functions remote MCP server with an interactive Microsoft 365 Copilot sales workspace."
 ---
 
 # Sales companion MCP Apps PoC
@@ -29,7 +29,7 @@ The PoC never writes to CRM. Dashboard and opportunity reads use deterministic s
 ## Setup, build, and test
 
 ```powershell
-Set-Location C:\Flutter\sales-mcp-ui-poc
+Set-Location <path-to-clone>
 npm install
 npm test
 ```
@@ -46,7 +46,7 @@ npm run build
 Start Azurite first. The checked-in `local.settings.json` uses `UseDevelopmentStorage=true`, contains no credentials, and defaults to synthetic data.
 
 ```powershell
-Set-Location C:\Flutter\sales-mcp-ui-poc
+Set-Location <path-to-clone>
 npm start
 ```
 
@@ -130,16 +130,16 @@ azd deploy
 The deployed endpoint is:
 
 ```text
-https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp
+https://<function-app-name>.azurewebsites.net/runtime/webhooks/mcp
 ```
 
 To switch the deployed app to a read-only CRM MCP source, set `DATA_MODE=mcp` and `CRM_MCP_URI` as server-side Function App settings through the approved deployment/configuration process. Do not expose `CRM_MCP_URI` to the app UI.
 
 ## Microsoft 365 package
 
-`appPackage` contains a declarative agent and a pinned `RemoteMCPServer` plugin with only the five PoC tools. The deployed package uses Entra application `d22d3dce-f56f-4a9a-bf08-5d02412cf2a0` and an Enterprise token-store Entra SSO configuration created by Agents Toolkit. The generated Application ID URI is `api://auth-0e8e3566-ac5e-4e00-b19e-7731a1d65d55/d22d3dce-f56f-4a9a-bf08-5d02412cf2a0`.
+`appPackage` contains a declarative agent and a pinned `RemoteMCPServer` plugin with only the five PoC tools. Configure `MCP_SERVER_URL`, `MCP_DA_OAUTH_CLIENT_ID`, and the publisher values in the Agents Toolkit environment before provisioning. Agents Toolkit creates the Teams app ID and Enterprise token-store references used when packaging.
 
-The package passed all 61 Agents Toolkit validation rules and was installed in the test tenant (Title ID `T_2064f322-b040-883c-9e43-c0da44867a24`). The chart-enabled UI bundle is deployed to the existing Function App; the M365 package did not require a manifest change. One interactive user consent/invocation in an authenticated M365 Copilot session remains required to prove inline rendering and per-user identity. Replace publisher URLs/contact values before broader distribution.
+Validate and sideload the generated package in the target tenant, then complete interactive consent and verify the five tools, inline MCP App rendering, callbacks, and trusted per-user identity. Tenant-wide publication remains an administrator-controlled step.
 
 ## Copilot Cowork skills
 
@@ -152,7 +152,7 @@ The package passed all 61 Agents Toolkit validation rules and was installed in t
 The package uses the same five MCP tools as the M365 declarative agent. Replace the endpoint and OAuth token-store reference in `cowork/manifest.json` before upload; never place credentials in the skill files. Build it with:
 
 ```powershell
-Set-Location C:\Flutter\sales-mcp-ui-poc
+Set-Location <path-to-clone>
 .\cowork\scripts\package.ps1
 ```
 
@@ -160,6 +160,7 @@ Cowork skills are instructions that orchestrate connector tools; they are not an
 
 ## Architecture artifacts
 
+- [Runtime, deployment, and packaging walkthrough](docs/runtime-deployment-packaging.md)
 - [Azure deployment diagram](docs/architecture/sales-companion-architecture.png) and [editable Draw.io source](docs/architecture/sales-companion-architecture.drawio)
 - [Component architecture diagram](docs/architecture/sales-companion-components.png)
 - [Mermaid sequence](docs/architecture/sequence.mmd)
@@ -178,9 +179,20 @@ The diagrams distinguish Entra token issuance, Easy Auth enforcement, Function m
 - Synthetic data must not be represented as real customer or pipeline data.
 - No real credentials belong in `local.settings.json`, manifests, or source.
 
+## Telemetry
+
+The Azure deployment configures Application Insights for operational traces,
+request correlation, failures, and latency. Do not log prompts, tokens,
+credentials, or CRM payloads. To opt out for a deployment, remove the
+`APPLICATIONINSIGHTS_CONNECTION_STRING` and
+`APPLICATIONINSIGHTS_AUTHENTICATION_STRING` Function App settings after
+deployment; a later `azd provision` may restore them.
+
 ## Cleanup
 
-Azure resources and the installed M365 app are intentionally preserved for user verification. Local dependency and runtime cache directories are removed after final validation; restore dependencies with `npm ci`. Do not run `azd down` until the user explicitly approves deletion.
+Local dependency and runtime caches are ignored; restore dependencies with
+`npm ci`. Run `azd down` only when you intend to delete the sample's Azure
+resources, and remove any sideloaded Microsoft 365 package separately.
 
 ## Trademarks
 

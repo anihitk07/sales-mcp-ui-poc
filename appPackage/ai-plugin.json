@@ -3,7 +3,7 @@
   "schema_version": "v2.4",
   "name_for_human": "Sales companion MCP",
   "description_for_human": "Review opportunities and create explicitly confirmed simulated quotes.",
-  "contact_email": "publisher@example.com",
+  "contact_email": "${{PUBLISHER_EMAIL}}",
   "namespace": "sales-companion-poc",
   "functions": [
     {
@@ -31,7 +31,7 @@
     {
       "type": "RemoteMCPServer",
       "spec": {
-        "url": "https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp",
+        "url": "${{MCP_SERVER_URL}}",
         "mcp_tool_description": {
           "file": "mcp-tools.json"
         }
@@ -45,7 +45,7 @@
       ],
       "auth": {
         "type": "OAuthPluginVault",
-        "reference_id": "${{MCP_DA_AUTH_ID_FUNCAPI3HZ}}"
+        "reference_id": "${{MCP_DA_AUTH_ID}}"
       }
     }
   ]

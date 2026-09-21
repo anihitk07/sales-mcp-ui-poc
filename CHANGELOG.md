@@ -1,13 +1,9 @@
-## [project-title] Changelog
+# Changelog
 
-<a name="x.y.z"></a>
-# x.y.z (yyyy-mm-dd)
+## 1.0.0 - 2026-09-21
 
-*Features*
-* ...
-
-*Bug Fixes*
-* ...
-
-*Breaking Changes*
-* ...
+- Added the Azure Functions remote MCP server and MCP Apps UI.
+- Added synthetic and configurable read-only upstream MCP data modes.
+- Added Blob-backed simulated quote preview, revision, and idempotent save.
+- Added Microsoft 365 declarative-agent and Copilot Cowork packages.
+- Added Azure deployment, component, runtime, and packaging documentation.

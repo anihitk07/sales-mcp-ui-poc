@@ -17,7 +17,7 @@ packaging artifacts used by the proof of concept.
    deployed Azure Functions endpoint:
 
    ```text
-   https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp
+   https://<function-app-name>.azurewebsites.net/runtime/webhooks/mcp
    ```
 
 4. Azure Functions hosts the remote MCP server. There is no separate
@@ -186,6 +186,32 @@ The checked-in `m365agents.yml` provisions:
 uses: teamsApp/create
 uses: oauth/register
 ```
+
+Before provisioning, set these Agents Toolkit environment values:
+
+| Setting | Value |
+| --- | --- |
+| `MCP_SERVER_URL` | Deployed Function MCP endpoint, including `/runtime/webhooks/mcp` |
+| `MCP_DA_OAUTH_CLIENT_ID` | Entra application client ID used by the MCP server |
+| `PUBLISHER_EMAIL` | Package publisher contact |
+| `PUBLISHER_WEBSITE_URL` | Public publisher website |
+| `PUBLISHER_PRIVACY_URL` | Public privacy statement |
+| `PUBLISHER_TERMS_URL` | Public terms of use |
+
+Agents Toolkit creates `TEAMS_APP_ID`, `MCP_DA_AUTH_ID`, and
+`MCP_DA_APPLICATION_ID_URI` during provisioning.
+
+Prepare and sideload the package with:
+
+```powershell
+atk provision --env <environment-name>
+atk package --env <environment-name>
+atk install --file-path .\appPackage\build\appPackage.<environment-name>.zip
+```
+
+`appPackage/build/` is generated and ignored by Git. Sideloading installs the
+package for testing; organization-wide publication remains a separate
+administrator-controlled process.
 
 The toolkit is used to assist with:
 

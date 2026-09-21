@@ -87,6 +87,7 @@ typings/
 dist
 out
 cowork/*.zip
+appPackage/build/
 
 # Azure Functions artifacts
 bin

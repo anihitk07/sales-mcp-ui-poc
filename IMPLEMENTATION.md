@@ -56,7 +56,7 @@ sequenceDiagram
 2. Run:
 
    ```powershell
-   Set-Location C:\Flutter\sales-mcp-ui-poc
+   Set-Location <path-to-clone>
    npm install
    npm test
    npm start
@@ -84,7 +84,7 @@ The parent workflow performs validation and deployment; this implementation does
 5. The deployed MCP endpoint is:
 
    ```text
-   https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp
+   https://<function-app-name>.azurewebsites.net/runtime/webhooks/mcp
    ```
 
 6. Confirm Easy Auth returns 401 without a token and accepts an approved Entra client token.
@@ -95,16 +95,16 @@ The IaC preserves Node 22 Flex Consumption, managed identity, Entra configuratio
 
 ## Microsoft 365 sideload
 
-Completed configuration:
+Target-tenant configuration:
 
-1. The package targets `https://func-api-3hzb2nt3ps5ki.azurewebsites.net/runtime/webhooks/mcp` and Entra application `d22d3dce-f56f-4a9a-bf08-5d02412cf2a0`.
-2. Agents Toolkit created Enterprise token-store auth configuration `ZTFhMjBjMzEtNWU4NC00YzM1LTllM2ItMDViZTUzNTMwZjMwIyMwZThlMzU2Ni1hYzVlLTRlMDAtYjE5ZS03NzMxYTFkNjVkNTU=`.
-3. Its Application ID URI `api://auth-0e8e3566-ac5e-4e00-b19e-7731a1d65d55/d22d3dce-f56f-4a9a-bf08-5d02412cf2a0` was added without removing the original API URI.
-4. The Teams OAuth consent redirect was added and Enterprise token-store client `ab3be6b7-f5df-413d-ac2d-abf1e3fd9c0b` was pre-authorized for `user_impersonation`.
-5. Function Easy Auth retains the original audience/client and also allows the token-store audience/client.
-6. The package passed 61 validation rules and was installed in personal scope as Title ID `T_2064f322-b040-883c-9e43-c0da44867a24`.
+1. Set `MCP_SERVER_URL` to the deployed `/runtime/webhooks/mcp` endpoint.
+2. Set `MCP_DA_OAUTH_CLIENT_ID` to the Entra application client ID accepted by Function Easy Auth.
+3. Set the publisher email, website, privacy, and terms values used by `appPackage`.
+4. Run the Agents Toolkit provisioning flow in `m365agents.yml`; it creates the Teams app and Enterprise token-store references.
+5. Confirm the generated Application ID URI, OAuth redirect, pre-authorized client, and Easy Auth audiences are correct for the target tenant.
+6. Validate the package and sideload it in personal scope.
 
-Remaining acceptance step: open the installed agent in an authenticated M365 Copilot session, complete interactive consent, then confirm the five tools, inline MCP App rendering, callback, and trusted per-user identity. Replace placeholder publisher metadata before broader distribution.
+Open the installed agent in an authenticated Microsoft 365 Copilot session, complete interactive consent, then confirm the five tools, inline MCP App rendering, callback, and trusted per-user identity.
 
 ## Dashboard visualization component
 
@@ -216,8 +216,13 @@ Failure to prove authenticated per-user Blob scoping blocks production progressi
 - There is no tax, legal approval, PDF generation, CRM synchronization, or production audit workflow.
 - M365 app publisher metadata remains tenant-owned placeholder content.
 
-The tenant Entra SSO configuration, Easy Auth allowlists, managed-identity Blob access, package validation, and personal-scope sideload are complete. Remaining gates are interactive M365 consent plus inline rendering/callback/per-user isolation proof, followed by the Copilot Studio feasibility spike.
+The sample includes Entra SSO, Easy Auth, managed-identity Blob access, package
+templates, and personal-scope sideload instructions. Each deployment must still
+verify interactive consent, inline rendering, callbacks, and per-user identity
+isolation in its target tenant.
 
-## No-delete note
+## Cleanup
 
-The PoC resources in `rg-sales-mcp-ui-poc` and the installed M365 app are intentionally preserved for user verification. Local dependency/runtime caches are removed after final validation. Do not delete cloud or tenant resources until the user explicitly approves it.
+Run `azd down` only when the sample's Azure resources should be deleted. Remove
+the sideloaded Microsoft 365 package separately through the tenant's approved
+application-management flow.
